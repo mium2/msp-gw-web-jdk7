@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- License Key Locations -->
+	<msp>
+		<system>
+			<license>
+				<key>WEB-INF/config/license.key</key>
+				<cert>WEB-INF/config/license.cer</cert>
+				<!--<key>file:/Users/mium2/project/R2-m-server-plat/admin/2.7.0/msp-admin-web/src/main/webapp/WEB-INF/config/license.key</key>-->
+				<!--<cert>file:/Users/mium2/project/R2-m-server-plat/admin/2.7.0/msp-admin-web/src/main/webapp/WEB-INF/config/license.cer</cert>-->
+			</license>
+		</system>
+	</msp>
+    <common>
+        <api>
+            <upload>
+                <path>/Users/mium2/temp/</path>
+            </upload>
+        </api>
+    </common>
+	<!-- DataSource Configuration -->
+	<datasource>
+		<type>jndi</type>
+        <!--중요! 연결할 DB 종류를 반드시 맞춰주세요-->
+        <dbtype>oracle</dbtype>
+		<!--<dbtype>oracle9i</dbtype>-->
+        <!--<dbtype>mysql</dbtype>-->
+        <!--<dbtype>mssql</dbtype>-->
+        <!--<dbtype>db2</dbtype>-->
+        <!--<dbtype>informix</dbtype>-->
+<!--		<dbcp>
+			<jdbc>
+				<driverClass>oracle.jdbc.OracleDriver</driverClass>
+				<url>jdbc:oracle:thin:@211.241.199.140:1521:orcl2</url>
+				<username>morpheus_release2</username>
+				<password>manager</password>
+				<minIdle>5</minIdle>
+			</jdbc>
+		</dbcp>-->
+		<jndiname>
+			<msp>
+				<mobile>jdbc/msp_${datasource.dbtype}</mobile>
+			</msp>
+		</jndiname>
+		<!-- MyBatis MapperLocation -->
+		<mybatis>
+			<msp>
+				<mobile>
+					<mapperLocation>classpath:kr/msp/sqlmap/${datasource.dbtype}/**/*.xml</mapperLocation>
+					<mapperLocation2>WEB-INF/sqlmap/**/*.xml</mapperLocation2>
+					<!--<mapperLocation2>file:src/main/webapp/WEB-INF/sqlmap/**/*.xml</mapperLocation2>-->
+				</mobile>
+				
+			</msp>
+		</mybatis>
+	</datasource>
+	
+	<server>
+		<session>
+			<filter></filter>
+			<use>false</use>
+		</session>
+        <!--중요:모바일 통계 정보가 쌓일 물리적인 디렉토리 경로 설정-->
+		<eventlog>
+			<use>false</use>
+			<save_path>/home/uracle/msp-server/eventlogs/</save_path>
+		</eventlog>
+	</server>
+	<!-- Resource Download URL -->
+	<resource>
+		<!--리소스 zip파일 다운받을 URL을 Request 프로토콜이 http든 https든 상관없이 무조건 https로 URL을 만들어 보냄-->
+		<https_force_yn>N</https_force_yn>
+		<https_port></https_port>
+        <!--매우중요: 리소스 배포할 서버가 따로 존재할경우 해당 리소스배포서버 URL정보를 넣어준다. 만약, 리소스배포파일서버가 따로 없다면 빈값으로 넣어야함(중요)-->
+		<download_url></download_url>
+		<!--0:NAS 또는 http서버를 사용 zip파일명을 포함한 GET방식 파일요청. 1:WAS에 다운로드 zip파일 명이 아닌 파일아이디를 넘겨서 받는 방식  -->
+		<download_url_type>0</download_url_type>
+	</resource>
+	
+	<!-- msp Store Configuration -->
+	<store>
+		<service>
+            <!--중요! 스토어에서 배포한 앱을 다운받을수 웹어드민 URL 주소 이주소는 Admin페이지 주소 + ContextRoot로 하면됨-->
+			<url>http://211.241.199.217:18080/msp-admin/</url>
+		</service>
+		<path>
+			<!-- <img>img</img> -->
+			<bin>apk</bin>
+		</path>
+		<upload>
+            <!--중요:스토어에서 배포할 앱이 저장될 물리적인 디렉토리 경로인데 해당 웹서버의 루트디렉토리로 설정 즉 웹서버 WEB-INF가 있는 부모디렉토리 풀경로적으면됨-->
+			<absolute_path>/home/uracle/msp-server/tomcat6/webapps/msp-admin/</absolute_path>
+		</upload>
+	</store>
+    <!--
+    브라우저에서도 동일하게 사용할 수 있도록 하기 위해 해당 리소스가 존재하는 물리적인 디렉토리 설정
+    확인: 아래의 설정한 모바일 리소스가 위치가 웹서버안에 존재 하지 않을시 웹서버 디렉토리에 심볼릭 링크(real_res, dev_res)를 만들어 주세요
+    ====> !중요!!!! 마지막 리소스 폴더명은 res로 만들어 주세요
+    윈도우 : mklink /d <웹서버안에만들심볼릭링크디렉토리풀경로> <실제존재하는디렉토리풀경로>  ==> 구분 스페이스
+            예)mklink /d C:\project\web-proj\m-server-plat\server\msp-gw-web\target\msp-gw-web-2.0.0\real_res F:\temp\webplatform_res\real_res
+            삭제: rmdir 웹서버안에 지울 심볼릭링크디렉토리풀경로
+    리눅스 : ln -s <존재하는디렉토리풀경로> <만들링크디렉토리 풀경로>
+            예)ln -s /home/uracle/msp-server/webflatform_res/res_res/ /home/uracle/msp-server/tomcat6/webapps/msp-gw/real_res
+            삭제: rm <만들링크디렉토리 풀경로>
+    -->
+    <webplatform>
+        <!--중요. 반드시 확인 마지막 /는 없게 해 주세요. 그리고 어드민에서 배포한 폴더명 마지막 real_res, dev_res는 빼야함-->
+        <resource_path>/Users/mium2/temp/webplatform_res</resource_path>
+		<webRoot>/msp-gw</webRoot>
+		<webInterfaceRoot>real_res/1/res</webInterfaceRoot>
+    </webplatform>
+	
+</configuration>

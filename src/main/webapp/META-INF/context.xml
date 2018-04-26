@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context allowLinking="true">
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+	<Resource name="jdbc/msp_oracle"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="oracle.jdbc.OracleDriver"
+        url="jdbc:oracle:thin:@211.241.199.243:1521:ORCL"
+        username="admin41"
+        password="uracle1234"
+        maxActive="20"
+        maxIdle="10"
+        minIdle="5"
+        maxWait="-1"/>
+
+	<Resource name="jdbc/msp_oracle9i" 
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="oracle.jdbc.OracleDriver"
+        url="jdbc:oracle:thin:@211.241.199.221:1521:MORP10"
+        username="MSP_ADMIN"
+        password="!dusrnthdjemals!"
+        maxActive="20"
+        maxIdle="10"
+        minIdle="5"
+        maxWait="-1"/>
+
+	<Resource auth="Container"
+        name="jdbc/msp_mssql"
+        type="javax.sql.DataSource"
+        driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        url="jdbc:sqlserver://211.241.199.63:1433;DatabaseName=morpheus;"
+        username="sa"
+        password="1110"
+        maxActive="50"
+        maxIdle="10"
+        maxWait="-1"/>
+
+  	<Resource name="jdbc/msp_mysql" auth="Container"
+        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://211.241.199.243:3306/admin28?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+        username="root" password="1110" maxActive="500" minIdle="100" maxIdle="500"
+        maxWait="-1"/>
+
+    <Resource name="jdbc/msp_db2"
+         auth="Container"
+         type="javax.sql.DataSource"
+         username="ADMIN"
+         password="dusrnthvntnl"
+         driverClassName="com.ibm.db2.jcc.DB2Driver"
+         url="jdbc:db2://211.241.199.220:50000/ADMIN"
+         maxActive="8"
+         maxIdle="4"/>
+
+    <Resource name="jdbc/msp_informix"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="com.informix.jdbc.IfxDriver"
+        url="jdbc:informix-sqli://211.241.199.84:9090/MSP_IDB:INFORMIXSERVER=test;CLIENT_LOCALE=en_us.CP1252;DB_LOCALE=en_US.8859-1;SERVER-LOCALE=en_US.CP1252;NEWLOCALE=ko_kr,en_us;NEWCODESET=KSC5601,8859-1,819;DELIMIDENT=Y;"
+        username="informix"
+        password="1234"
+        maxActive="500"
+        minIdle="100"
+        maxIdle="500"/>
+
+</Context>

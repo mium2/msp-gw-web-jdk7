@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--제우스일 경우 주석 해제 하고 다음줄 주석 처리-->
+    <!--<mvc:default-servlet-handler default-servlet-name="WorkerServlet"/>-->
+    <mvc:default-servlet-handler/>
+
+    <bean id="dispatcherUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true" />
+        <property name="mappings">
+            <props>
+                <prop key="*.wa">webPloatformCtrl</prop>     <!--컨드롤 생성하지 않고 URL로 맵핑걸기-->
+                <prop key="/index.do">webPloatformCtrl</prop>
+            </props>
+        </property>
+    </bean>
+    <!--사용자 정의 컨트롤들-->
+    <bean id="webPloatformCtrl" class="kr.msp.webplatform.controller.WebPloatformCtrl">
+        <property name="mspProperties" ref="mspConfig"/>
+    </bean>
+</beans>

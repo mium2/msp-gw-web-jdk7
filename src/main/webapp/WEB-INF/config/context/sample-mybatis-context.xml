@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- Sample DB JNDI 사용-->
+    <bean id="dataSource_sample" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <!--중요: 이부분 설정한 jndi 명으로 변경-->
+        <property name="jndiName" value="${datasource.jndiname.msp.mobile}"/>
+        <property name="resourceRef" value="true"/>
+    </bean>
+    <!-- DataSource DBCP 사용-->
+<!--    <bean id="dataSource_sample" class="kr.msp.dbcp.CryptoDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc2.driverClassName}"/>
+        <property name="url" value="${jdbc2.url}"/>
+        <property name="username" value="${jdbc2.username}"/>
+        <property name="password" value="${jdbc2.password}"/>
+    </bean>-->
+
+    <bean id="sqlSessionFactory_sample" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_sample" />
+        <!--중요: mybatis xml 파일위치 변경-->
+        <property name="mapperLocations" value="${datasource.mybatis.msp.mobile.mapperLocation2}"/>
+    </bean>
+
+    <bean id="sqlSession_sample" name="sqlSession_sample" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory_sample"></constructor-arg>
+        <qualifier value="sqlSession_sample"/>
+    </bean>
+
+    <bean id="transactionManager_sample"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource_sample" />
+        <qualifier value="transactionManager_sample"/>
+    </bean>
+</beans>

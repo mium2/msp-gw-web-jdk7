@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Sample">
+<select id="getSampleData" resultType="hashmap">
+    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN
+    union ALL
+    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN
+    union ALL
+    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN
+    union ALL
+    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN
+</select>
+
+<select id="getUserList2" resultType="com.example.dto.SampleUserDto">
+    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN
+    union ALL
+    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN
+    union ALL
+    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN
+    union ALL
+    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN
+</select>
+
+<insert id="insertSample" parameterType="com.example.dto.SampleUserDto">
+    insert into SAMPLE values(#{SEQNO},#{USERNM},#{USERID},#{USERSN})
+</insert>
+
+</mapper>

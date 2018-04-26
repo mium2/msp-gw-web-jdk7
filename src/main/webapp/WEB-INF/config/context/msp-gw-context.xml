@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		">
+
+    <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="properties" ref="mspConfig"/>
+    </beans:bean>
+
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+    <context:component-scan base-package="kr.msp, com.example">
+        <context:exclude-filter type="regex" expression="kr.msp.config.*"/>
+        <context:exclude-filter type="regex" expression="kr.msp.context.*"/>
+    </context:component-scan>
+
+    <context:annotation-config />
+
+    <!--<beans:import resource="message-context.xml"/>-->
+
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven />
+
+    <!--제우스일 경우 주석 해제 하고 다음줄 주석 처리-->
+    <!--<mvc:default-servlet-handler default-servlet-name="WorkerServlet"/>-->
+	<mvc:default-servlet-handler/>
+
+    <beans:bean id="uracleSecureAuth" class="kr.msp.base.security.UracleSecureAuth" >     <!--uralce SecureAuth decirpt-->
+        <beans:qualifier value="uracleSecureAuth"/>
+    </beans:bean>
+
+    <beans:bean id="otherSecureAuth" class="com.example.controller.SampleOtherSecureAuth"> <!-- Client 3part product-->
+        <beans:qualifier value="otherSecureAuth"/>
+    </beans:bean>
+
+    <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <beans:property name="messageConverters">
+            <beans:list>
+                <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <beans:property name="supportedMediaTypes" value="application/json"/>
+                </beans:bean>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <beans:bean id="defaultInterceptor" class="kr.msp.base.interceptor.DefaultInterceptor">
+                <beans:property name="secureAuth" ref="uracleSecureAuth" />
+            </beans:bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--<beans:bean id="defaultJsonView" class="kr.msp.base.dto.DefaultJsonView"></beans:bean>-->
+
+    <beans:bean id="eventBatchScheduler" class="kr.msp.event.service.EventBatchScheduler"/>
+    <!-- Event Batch -->
+    <!--<context:component-scan base-package="kr.msp.event" use-default-filters="false">  -->
+    <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+    <!--</context:component-scan>-->
+
+    <task:scheduler id="scheduler" pool-size="1"/>
+    <task:scheduled-tasks scheduler="scheduler" >
+        <!-- <task:scheduled ref="eventBatchScheduler" method= "processEventLogFileToDb" cron="0 0/10 * * * ?" /> -->
+         <!--<task:scheduled ref="eventBatchScheduler" method= "processEventLogFileToDb" cron="10,30,50 * * * * ?" />-->
+        <task:scheduled ref="eventBatchScheduler" method= "processEventLogFileToDb" cron="0 0/30 * * * ?" />
+    </task:scheduled-tasks>
+    <!-- Event Batch END -->
+
+</beans:beans>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <beans:property name="properties" ref="mspConfig"/>
+	</beans:bean>
+ 	
+	<beans:bean id="mspConfig" class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">
+    	<beans:property name="configurations">
+        	<beans:list>
+            	<beans:ref bean="mspXmlConfiguration"/>
+                <beans:ref bean="customXmlConfiguration"/>
+	        </beans:list>
+	    </beans:property>
+	</beans:bean>
+
+	<beans:bean id="mspXmlConfiguration" class="org.apache.commons.configuration.XMLConfiguration">
+    	<beans:constructor-arg type="java.lang.String">
+        	<beans:value>config/msp.xml</beans:value>
+    	</beans:constructor-arg>
+	</beans:bean>
+    <beans:bean id="customXmlConfiguration" class="org.apache.commons.configuration.XMLConfiguration">
+        <beans:constructor-arg type="java.lang.String">
+            <beans:value>config/custom.xml</beans:value>
+        </beans:constructor-arg>
+    </beans:bean>
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
+    <context:annotation-config />
+
+    <beans:bean id="messageSource" class="kr.msp.base.util.ResourceBundleMessageSourceRoli">
+        <beans:property name="basenames">
+            <beans:list>
+                <beans:value>message</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <!--반드시 propertyPlaceholerConfigurer 보다 밑에 있어야 한다-->
+    <beans:bean id="licenseValidator" class="kr.msp.core.license.LicenseValidator"/>
+    <beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
+    <beans:bean id="urlController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
+    <beans:bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+    <beans:bean id="multipartResolver"
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="2000000000"/>
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
+
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/view/"/>
+        <beans:property name="suffix" value=".jsp"/>
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+
+</beans:beans>

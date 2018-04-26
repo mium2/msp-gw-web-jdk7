@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <legacy_sys>
+        <checkLoopTime>10</checkLoopTime>
+        <!--쉼표 구분자로 넣는다 ex)http://211.241.199.215:18080/,http://211.241.199.215:18080/,http://127.0.0.1:8080/msp-gw/-->
+        <host_list></host_list>
+    </legacy_sys>
+    <jdbc>
+        <driverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverClassName>
+        <url>+Um1gu42Jlg3bCnvDmjVKsHlBRl4RM82L/fM5qtoOIA6SqJ35jmd+lfKdKIcjaqROXM0xCQqD4O3RyferBQ+7Q==</url>
+        <username>vTn+Iu2LqRJIl3f4EfbtBg==</username>
+        <password>NFCBNYUzfNNrutkD4TpmDw==</password>
+    </jdbc>
+    <jdbc2>
+        <driverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverClassName>
+        <url>+Um1gu42Jlg3bCnvDmjVKsHlBRl4RM82L/fM5qtoOIA6SqJ35jmd+lfKdKIcjaqROXM0xCQqD4O3RyferBQ+7Q==</url>
+        <username>vTn+Iu2LqRJIl3f4EfbtBg==</username>
+        <password>NFCBNYUzfNNrutkD4TpmDw==</password>
+    </jdbc2>
+    <!--아래의 사용하시고자 하는 엘리먼트를 확장해서 사용하세요.-->
+    <test>
+        <id>TEST01</id>
+    </test>
+    <upload>
+        <path>/Users/mium2/temp/trash/upload</path>
+    </upload>
+    <test>
+        <aaa>1111</aaa>
+    </test>
+</configuration>
