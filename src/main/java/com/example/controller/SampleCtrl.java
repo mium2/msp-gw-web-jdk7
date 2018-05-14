@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,8 @@ public class SampleCtrl {
     // !!!주의 확인: RequestMapping  uri 는 반드시 /api로 시작 해야만 한다.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(method= RequestMethod.POST, value="/api/basic/sample/{id}",produces = "application/json; charset=utf8")
-    public @ResponseBody String sampleList(HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody
+    ModelAndView sampleList(HttpServletRequest request, HttpServletResponse response){
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 클라이언트에서 넘어온 request 값  map으로 리턴해줌 (반드시 포함)
@@ -124,10 +126,11 @@ public class SampleCtrl {
                 reqHeadMap.put(Const.RESULT_MESSAGE,messageSource.getMessage("500.error", null , Locale.getDefault().ENGLISH ));
             }
         }
-        responseMap.put(Const.HEAD,reqHeadMap);
-        responseMap.put(Const.BODY,responseBodyMap);
 
-        return JsonObjectConverter.getJSONFromObject(responseMap);
+        ModelAndView mv = new ModelAndView("defaultJsonView");
+        mv.addObject(Const.HEAD,reqHeadMap);
+        mv.addObject(Const.BODY,responseBodyMap);
+        return mv;
 
     }
 

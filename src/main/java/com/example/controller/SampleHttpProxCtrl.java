@@ -47,7 +47,7 @@ public class SampleHttpProxCtrl {
     // !!!주의 확인: RequestMapping  uri 는 반드시 /api로 시작 해야만 한다.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(method= RequestMethod.POST, value="/api/msp/sample/httpproxy",produces = "application/json; charset=utf8")
-    public @ResponseBody String sampleList(HttpServletRequest request, HttpServletResponse response){
+    public ModelAndView sampleList(HttpServletRequest request, HttpServletResponse response){
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 클라이언트에서 넘어온 request 값  map으로 리턴해줌 (반드시 포함)
@@ -128,7 +128,7 @@ public class SampleHttpProxCtrl {
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //연결한 HTTP 서버로 부터 받은 데이타를 단말로 "BODY"라는 맵키에 받은 데이타 JSON현태로 전달
-            responseMap.put(Const.BODY,responseBean.getBody());
+            responseBodyMap.put(Const.BODY,responseBean.getBody());
 
             /**************************************************************************************************
              * 이 부분에 비즈니스 로직 마침.
@@ -141,8 +141,10 @@ public class SampleHttpProxCtrl {
                 reqHeadMap.put(Const.RESULT_MESSAGE,messageSource.getMessage("500.error", null , Locale.getDefault().ENGLISH ));
             }
         }
-        responseMap.put(Const.HEAD,reqHeadMap);
+        ModelAndView mv = new ModelAndView("defaultJsonView");
+        mv.addObject(Const.HEAD,reqHeadMap);
+        mv.addObject(Const.BODY, responseBodyMap);
 
-        return JsonObjectConverter.getJSONFromObject(responseMap);
+        return mv;
     }
 }
