@@ -21,17 +21,17 @@
 
 
     <logger name="kr.msp" additivity="false">
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
     <logger name="org.springframework" additivity="false">
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <root level="DEBUG">
-        <appender-ref ref="CONSOLE" />
-    </root>
+    <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="CONSOLE" />-->
+    <!--</root>-->
 </configuration>
         

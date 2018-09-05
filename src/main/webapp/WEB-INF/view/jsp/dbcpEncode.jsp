@@ -20,6 +20,11 @@
     if(request.getAttribute("encPass")!=null){
         encPass = request.getAttribute("encPass").toString();
     }
+
+    String servletContext = request.getContextPath();
+    if(servletContext.equals("/")){
+        servletContext = "";
+    }
 %>
 <html>
 <head>
@@ -111,7 +116,7 @@
     </script>
 </head>
 <body>
-<form name="encodForm" method="post" action="<%=request.getContextPath()%>/dbcpEncode" onsubmit="return chkForm();">
+<form name="encodForm" method="post" action="<%=servletContext%>/dbcpEncode" onsubmit="return chkForm();">
     <table style="width: 80%" class="FormTable">
         <colgroup><!-- 6cell -->
             <col width="20%"/><col width="auto"/>
@@ -136,7 +141,7 @@
         </tr>
         </tbody>
     </table>
-<br><br><br>
+    <br><br><br>
     <table style="width: 80%" class="FormTable" style="margin-top: 30px">
         <colgroup><!-- 6cell -->
             <col width="20%"/><col width="auto"/>

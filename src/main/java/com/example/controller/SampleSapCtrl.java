@@ -101,17 +101,17 @@ public class SampleSapCtrl {
             sapFuncManager.FunctionInfoPrint(returnParams);
             // JCoFunction 구하기
             Map<String,Object> reqSapParamMap = new HashMap<String, Object>();  //Function에 전달할 파라미터맵
-            reqMap.put("FUNCNAME","Z*");     // Z로 시작되는 펑션명
-            reqMap.put("GROUPNAME","Z*");    // 펑션그룹이 Z로 시작되는 펑션
-            reqMap.put("LANGUAGE","en");     // 언어 기본값 en
-            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqSapParamMap,poolName,jcoClientConnectBean);
+            reqSapParamMap.put("FUNCNAME","Z*");     // Z로 시작되는 펑션명
+            reqSapParamMap.put("GROUPNAME","Z*");    // 펑션그룹이 Z로 시작되는 펑션
+            reqSapParamMap.put("LANGUAGE","en");     // 언어 기본값 en
+            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqSapParamMap);
 
             //리턴되는 값중 원하는 테이블 리스트 받기
             List<Map<String,Object>> revList = sapFuncManager.getTableRowsData(jCoFunction,"FUNCTIONS");
 
             responseBodyMap.put("data",revList);
 
-        } catch (JCoException e) {
+        } catch (Exception e) {
             reqHeadMap.put(Const.RESULT_CODE, Const.EXCEPTION_ERROR);
             if(e.getMessage() != null){
                 reqHeadMap.put(Const.RESULT_MESSAGE,e.getMessage());
@@ -168,7 +168,7 @@ public class SampleSapCtrl {
             // JCoFunction 구하기
             Map<String,Object> reqSapParamMap = new HashMap<String, Object>();  //Function에 전달할 파라미터맵
             reqMap.put("COMPANYCODEID", "0001");
-            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqSapParamMap,poolName,jcoClientConnectBean);
+            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqSapParamMap);
 
             //리턴되는 파라미터중 RETURN 데이타 가져오기
             Map<String,Object> returnResutlMap = sapFuncManager.getStructureMapData(jCoFunction, "RETURN");
