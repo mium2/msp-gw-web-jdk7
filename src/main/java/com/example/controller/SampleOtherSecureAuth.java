@@ -8,6 +8,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ import java.util.Map;
  * Time: 오전 5:10
  * #3part 제품 암복호화를 사용 할때 예제 반드시 SecureAuth 인터페이스를 implements해서 사용한다..
  */
+@Controller
 public class SampleOtherSecureAuth implements SecureAuth{
     public Map<String, Object> requestHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

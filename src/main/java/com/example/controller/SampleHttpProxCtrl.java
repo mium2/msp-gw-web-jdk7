@@ -104,7 +104,7 @@ public class SampleHttpProxCtrl {
              * @param reqBodyMap 넘길 파라미터 Map<String,Object>형태, 여기서는 단말로 부터 받은 파라미터 전부를 보낸다.
              * @param requestConfig 연결 컨넥션 정보 셋팅
              *****************************************************************************************************************/
-//            httpClientUtil.httpPostConnect(httpCalUrl,reqBodyMap,requestConfig);
+            httpClientUtil.httpPostConnect(httpCalUrl,reqBodyMap,requestConfig);
 
 
             /****************************************************************************************************************

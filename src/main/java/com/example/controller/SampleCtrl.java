@@ -1,8 +1,6 @@
 package com.example.controller;
 
-import kr.msp.base.util.JsonObjectConverter;
 import kr.msp.constant.Const;
-import org.apache.ibatis.session.SqlSession;
 import org.json.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -41,8 +39,7 @@ public class SampleCtrl {
     // !!!주의 확인: RequestMapping  uri 는 반드시 /api로 시작 해야만 한다.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(method= RequestMethod.POST, value="/api/basic/sample/{id}",produces = "application/json; charset=utf8")
-    public @ResponseBody
-    ModelAndView sampleList(HttpServletRequest request, HttpServletResponse response){
+    public ModelAndView sampleList(HttpServletRequest request, HttpServletResponse response){
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 클라이언트에서 넘어온 request 값  map으로 리턴해줌 (반드시 포함)
@@ -66,51 +63,11 @@ public class SampleCtrl {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //이 주석 부분은 클라이언트에서 받은 데이터를 확인 하는 용도로 사용
-        //샘플 확인. URI Path VARIABLES ATTRIBUTE  {id} 갑 구하기
-        logger.info("{id} value :"+ uriPathVal.get("id"));
-
-        //샘플 확인.  클라이언트에서 넘어온 공통 헤더 맵정보 출력
-        Set<Map.Entry<String,Object>> HeadMapSet = reqHeadMap.entrySet();
-        logger.info("#############################################################");
-        logger.info("################## 클라이언트가 보낸 헤더정보 ###############");
-        logger.info("#############################################################");
-        for(Map.Entry<String,Object> me : HeadMapSet){
-            logger.info("# Key:"+me.getKey() + ", Value : " + me.getValue());
-        }
-
-
-        //샘플 확인 JSON 데이타로 출력해보기
-        JSONObject headMapJson = new JSONObject(reqHeadMap);
-        logger.info("#############################################################");
-        logger.info("############### 클라이언트가 보낸 헤더 JSON변환 #############");
-        logger.info("#############################################################");
-        logger.info("# Head Json DATA:"+headMapJson);
-
-
-        //샘플 확인.  클라이언트에서 넘어온 파라미터  맵정보 출력
-        Set<Map.Entry<String,Object>> BodyMapSet = reqBodyMap.entrySet();
-        logger.info("#############################################################");
-        logger.info("############## 클라이언트가 보낸 파라미터 정보 ##############");
-        logger.info("#############################################################");
-        for(Map.Entry<String,Object> me : BodyMapSet){
-            logger.info("# Key:"+me.getKey() + ", Value : " + me.getValue());
-        }
-
-
-        //샘플 확인 JSON 데이타로 출력해보기
-        JSONObject bodyMapJson = new JSONObject(reqBodyMap);
-        logger.info("#############################################################");
-        logger.info("############ 클라이언트가 보낸 파라미터 JSON변환   ##########");
-        logger.info("#############################################################");
-        logger.info("# Parameters Json DATA:"+bodyMapJson);
-        logger.info("#############################################################");
         try{
             /**************************************************************************************************
              * 이 부분에 비즈니스 로직을 코딩한다.
              * 만약, 클라이언트에 에러처리를 하고 싶다면  responseMap.setResultCode(Const.EXCEPTION_ERROR); 사용
              **************************************************************************************************/
-
             List<Map<String,Object>> userList = sqlSession.selectList("Sample.getSampleData",reqMap);
             responseBodyMap.put("userList", userList);
 
@@ -126,10 +83,10 @@ public class SampleCtrl {
                 reqHeadMap.put(Const.RESULT_MESSAGE,messageSource.getMessage("500.error", null , Locale.getDefault().ENGLISH ));
             }
         }
-
         ModelAndView mv = new ModelAndView("defaultJsonView");
         mv.addObject(Const.HEAD,reqHeadMap);
         mv.addObject(Const.BODY,responseBodyMap);
+
         return mv;
 
     }

@@ -4,6 +4,7 @@ import com.sap.conn.jco.*;
 import kr.morpheus.adapter.sap.JcoDestionPoolManager;
 import kr.morpheus.adapter.sap.SapFuncManager;
 import kr.morpheus.adapter.sap.bean.JcoClientConnectBean;
+import kr.morpheus.adapter.sap.bean.JcoGroupClientConBean;
 import kr.morpheus.adapter.sap.bean.SAPFunctionParamInfoBean;
 import kr.msp.base.util.JsonObjectConverter;
 import kr.msp.constant.Const;
@@ -77,6 +78,22 @@ public class SampleSapCtrl {
         reqHeadMap.put(Const.RESULT_CODE, Const.OK);
         reqHeadMap.put(Const.RESULT_MESSAGE, Const.SUCCESS);
         try {
+
+            // SAP 메세지서버를 통한 Load-Balancing 서버 접속
+            JcoGroupClientConBean jcoGroupClientConBean = new JcoGroupClientConBean();
+            jcoGroupClientConBean.setMshost("127.0.0.1");
+            jcoGroupClientConBean.setMsserv("MSGSERVER");
+            jcoGroupClientConBean.setSysid("aaa");
+            jcoGroupClientConBean.setGroup("sapgroup");
+            jcoGroupClientConBean.setClient("800");
+            jcoGroupClientConBean.setUser("rfcuser01");
+            jcoGroupClientConBean.setPassword("rfcuser01");
+            jcoGroupClientConBean.setLang("en");
+
+            String poolName = jcoGroupClientConBean.getMshost()+"_"+jcoGroupClientConBean.getUser();
+            SapFuncManager sapFuncManager = new SapFuncManager(poolName,"BAPI_COMPANYCODE_GETDETAIL",jcoGroupClientConBean);
+
+            /*
             JcoClientConnectBean jcoClientConnectBean = new JcoClientConnectBean();
             jcoClientConnectBean.setLang("en");
             jcoClientConnectBean.setAshost("127.0.0.1");
@@ -90,9 +107,8 @@ public class SampleSapCtrl {
             // 확인 : 호스트별로 컨넥션풀을 관리 하고 싶을 경우는 poolName를 jcoClientConnectBean.getAshost()로 사용하고
             // 같은호스트더라도 유저별로 컨넥션풀을 관리하고 싶다면 jcoClientConnectBean.getAshost()+"_"+jcoClientConnectBean.getUser()로 한다.
             String poolName = jcoClientConnectBean.getAshost()+"_"+jcoClientConnectBean.getUser();
-
             SapFuncManager sapFuncManager = new SapFuncManager(poolName,"RFC_FUNCTION_SEARCH",jcoClientConnectBean);
-
+            */
             // import parameter 조회
             List<SAPFunctionParamInfoBean> importParams = sapFuncManager.getAllImportParamsMetadatas();
             sapFuncManager.FunctionInfoPrint(importParams);
@@ -101,10 +117,10 @@ public class SampleSapCtrl {
             sapFuncManager.FunctionInfoPrint(returnParams);
             // JCoFunction 구하기
             Map<String,Object> reqSapParamMap = new HashMap<String, Object>();  //Function에 전달할 파라미터맵
-            reqSapParamMap.put("FUNCNAME","Z*");     // Z로 시작되는 펑션명
-            reqSapParamMap.put("GROUPNAME","Z*");    // 펑션그룹이 Z로 시작되는 펑션
-            reqSapParamMap.put("LANGUAGE","en");     // 언어 기본값 en
-            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqSapParamMap);
+            reqMap.put("FUNCNAME","Z*");     // Z로 시작되는 펑션명
+            reqMap.put("GROUPNAME","Z*");    // 펑션그룹이 Z로 시작되는 펑션
+            reqMap.put("LANGUAGE","en");     // 언어 기본값 en
+            JCoFunction jCoFunction = sapFuncManager.excuteJCoFunction(reqMap);
 
             //리턴되는 값중 원하는 테이블 리스트 받기
             List<Map<String,Object>> revList = sapFuncManager.getTableRowsData(jCoFunction,"FUNCTIONS");

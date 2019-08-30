@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.google.gson.Gson;
+import kr.msp.base.dto.MobileMap;
+import kr.msp.base.util.MspProtocolUtil;
 import kr.msp.constant.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +30,7 @@ public class SampleNotMorpheusCtrl {
     private Gson gson = new Gson();
 
     @RequestMapping(value = "/notUseMorpheus",produces = "application/json; charset=utf8")
-    public @ResponseBody
-    String notUseMorpheus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody String notUseMorpheus(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // JSON 문자열을 Map or List Object 로 변환
         Set<Object> responseSet = new HashSet<Object>();

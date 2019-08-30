@@ -38,7 +38,6 @@
         table.FormTable, table.FormTable td{
             border               : 1px solid #CCC;
             border-collapse      : collapse;
-            font                 : "굴림", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
         }
 
         table.FormTable thead th,
@@ -141,7 +140,7 @@
         </tr>
         </tbody>
     </table>
-    <br><br><br>
+<br><br><br>
     <table style="width: 80%" class="FormTable" style="margin-top: 30px">
         <colgroup><!-- 6cell -->
             <col width="20%"/><col width="auto"/>

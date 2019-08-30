@@ -1,6 +1,3 @@
-<!-- 
-//Common Error Page by UncleJoe 
- -->
 <%@ page contentType="text/html; charset=utf-8" isErrorPage="true"%><%
 
 	response.setStatus(200);

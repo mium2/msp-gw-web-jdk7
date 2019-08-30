@@ -32,8 +32,7 @@ public class SampleXmlData {
     // !!!주의 확인: RequestMapping  uri 는 반드시 /api로 시작 해야만 한다.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value="/xmlData",produces = "text/xml; charset=utf8")
-    public @ResponseBody
-    String sampleList(HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody String sampleList(HttpServletRequest request, HttpServletResponse response){
 
         String returnString = "";
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

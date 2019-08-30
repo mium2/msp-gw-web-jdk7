@@ -41,8 +41,8 @@ public class SampleUploadCtrl {
     private String UPLOAD_ROOT_PATH;
 
 
-    @RequestMapping(value="/api/sample/fileUpload",method= RequestMethod.POST,produces = "application/json; charset=utf8")
-    public @ResponseBody String mobileTempUploadPost(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value="/sample/fileUpload",method= RequestMethod.POST,produces = "application/json; charset=utf8")
+    public String mobileTempUploadPost(HttpServletRequest request, HttpServletResponse response){
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 클라이언트에서 넘어온 request 값  map으로 리턴해줌 (반드시 포함)

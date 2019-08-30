@@ -41,7 +41,7 @@
         <beans:qualifier value="otherSecureAuth"/>
     </beans:bean>
 
-    <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+    <beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <beans:property name="messageConverters">
             <beans:list>
                 <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
