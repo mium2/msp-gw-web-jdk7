@@ -22,9 +22,9 @@
 	<datasource>
 		<type>jndi</type>
         <!--중요! 연결할 DB 종류를 반드시 맞춰주세요-->
-        <!--<dbtype>oracle</dbtype>-->
+        <dbtype>oracle</dbtype>
 		<!--<dbtype>oracle9i</dbtype>-->
-        <dbtype>mysql</dbtype>
+        <!--<dbtype>mysql</dbtype>-->
         <!--<dbtype>mssql</dbtype>-->
         <!--<dbtype>db2</dbtype>-->
         <!--<dbtype>informix</dbtype>-->

@@ -5,23 +5,23 @@
 
 <mapper namespace="Sample">
 <select id="getSampleData" resultType="hashmap">
-    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN
+    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN FROM dual
     union ALL
-    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN
+    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN FROM dual
     union ALL
-    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN
+    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN FROM dual
     union ALL
-    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN
+    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN FROM dual
 </select>
 
 <select id="getUserList2" resultType="com.example.dto.SampleUserDto">
-    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN
+    SELECT 'TEST1' USERNM , 'TEST1' USERID, '001' USERSN FROM dual
     union ALL
-    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN
+    SELECT 'TEST2' USERNM , 'TEST2' USERID, '002' USERSN FROM dual
     union ALL
-    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN
+    SELECT 'TEST3' USERNM , 'TEST3' USERID, '003' USERSN FROM dual
     union ALL
-    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN
+    SELECT 'TEST4' USERNM , 'TEST4' USERID, '004' USERSN FROM dual
 </select>
 
 <insert id="insertSample" parameterType="com.example.dto.SampleUserDto">
