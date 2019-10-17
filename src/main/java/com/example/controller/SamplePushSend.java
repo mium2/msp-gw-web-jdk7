@@ -175,7 +175,7 @@ public class SamplePushSend {
             reqParam.put("TYPE", "C");
             reqParam.put("MESSAGE", "{\"title\":\"안녕하세요.유라클 공지사항입니다.\",\"body\":\"오늘 새벽에 정기점검 있습니다.\n 감사합니다.\"}");
             //reqParam.put("MESSAGE", "안녕하세요. 테스트 발송입니다.");
-            reqParam.put("TEMPLATE_YN", "N");  //보내는 메세지의 치환변수(%CUID% or %CNAME% or %VAR%)가 있을 경우 Y로 보냄.
+            reqParam.put("TEMPLATE_YN", "N");  //보내는 메세지의 치환변수(%CUID% or %CNAME% or %VAR1%...%VAR10%)가 있을 경우 Y로 보냄.
             reqParam.put("PRIORITY", "3");
             reqParam.put("BADGENO", "0");
             reqParam.put("RESERVEDATE", "");  //예약발송일 경우 ex)20180708 153000
